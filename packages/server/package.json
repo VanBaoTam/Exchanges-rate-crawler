@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "sh ./clean.sh",
+    "clean:windows": "clean.bat",
+    "predev": "npm run clean && npm run build",
+    "predev1": "npm run clean ; npm run clean:windows",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node dist/server.js",
+    "dev1": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.14",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.6.3",
+    "@types/pg": "^8.10.2",
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.2.2"
+  }
+}
