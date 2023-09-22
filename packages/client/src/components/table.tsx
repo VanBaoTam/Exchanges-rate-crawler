@@ -8,6 +8,8 @@ import axios from "axios";
 function RateTable() {
   const [rate, setRate] = useState<ICurrency[] | null>(null);
   const [notify, setNotify] = useState<string>("Loading...");
+  const [time, setTime] = useState<string>(new Date().toLocaleTimeString());
+
   const handleFetching = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -37,6 +39,7 @@ function RateTable() {
         counter++;
       }
       setRate(data);
+      setTime(new Date().toLocaleTimeString());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -44,18 +47,32 @@ function RateTable() {
 
   useEffect(() => {
     handleFetching();
-    setTimeout(() => {
+    const timer = setInterval(() => {
+      handleFetching();
+    }, 600000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [handleFetching]);
+  useEffect(() => {
+    const isDisabled = setTimeout(() => {
       if (rate)
         setNotify(
           "Service is disabled or offline right now, please try later!"
         );
     }, 20000);
-  }, [handleFetching, rate]);
-
+    return () => {
+      clearTimeout(isDisabled);
+    };
+  }, [rate]);
   // -----------------------------------------------
   return (
     <Box sx={{ height: "80%", width: "80%", margin: "auto" }}>
-      <h1>Exchange's rate table (Base on VND)</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h1>Exchange's rate table (Base on VND)</h1>
+        <span style={{ marginLeft: "10px", fontSize: "20px" }}>{time}</span>
+      </div>
       {rate ? (
         <DataGrid
           disableRowSelectionOnClick

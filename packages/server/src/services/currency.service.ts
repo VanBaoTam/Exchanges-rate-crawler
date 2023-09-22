@@ -42,6 +42,9 @@ export class CurrencyService {
       return res.status(404).json({ message: "failed!" });
     }
   }
+  async updateDatabase(req: Request, res: Response) {
+    return res.status(200).json("UPDATED");
+  }
 }
 
 //------------------------------------------------
