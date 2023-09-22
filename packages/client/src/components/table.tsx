@@ -4,6 +4,7 @@ import { columns, rows } from "@constants";
 
 // -----------------------------------------------
 function RateTable() {
+  
   // -----------------------------------------------
   return (
     <Box sx={{ height: 400, width: "80%", margin: "auto" }}>
