@@ -7,12 +7,14 @@ import axios from "axios";
 // -----------------------------------------------
 function RateTable() {
   const [rate, setRate] = useState<ICurrency[] | null>(null);
+  const [notify, setNotify] = useState<string>("Loading...");
   const handleFetching = useCallback(async () => {
     try {
       const response = await axios.get(
         import.meta.env.VITE_BASE_URL + import.meta.env.VITE_CURRENCY_PATH ||
           "http://localhost:8080/"
       );
+      if (response.status !== 200) return;
       const responseData = response.data?.data;
       if (!responseData) return;
       const data: ICurrency[] = [];
@@ -39,30 +41,38 @@ function RateTable() {
       console.error("Error:", error);
     }
   }, []);
+
   useEffect(() => {
     handleFetching();
-  }, [handleFetching]);
+    setTimeout(() => {
+      if (rate)
+        setNotify(
+          "Service is disabled or offline right now, please try later!"
+        );
+    }, 20000);
+  }, [handleFetching, rate]);
+
   // -----------------------------------------------
   return (
-    <Box sx={{ height: 400, width: "80%", margin: "auto" }}>
+    <Box sx={{ height: "80%", width: "80%", margin: "auto" }}>
       <h1>Exchange's rate table (Base on VND)</h1>
       {rate ? (
         <DataGrid
+          disableRowSelectionOnClick
           rows={rate}
           columns={columns}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 10,
               },
             },
           }}
           pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
+          checkboxSelection={false}
         />
       ) : (
-        <h1>Loading...</h1>
+        <h1>{notify}</h1>
       )}
     </Box>
   );

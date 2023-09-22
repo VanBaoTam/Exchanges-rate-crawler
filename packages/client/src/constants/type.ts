@@ -1,6 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 export const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 90 },
+  { field: "id", headerName: "ID", width: 100 },
   {
     field: "symbol",
     headerName: "Symbol",
@@ -15,13 +15,13 @@ export const columns: GridColDef[] = [
     field: "buyingIRL",
     headerName: "Buying with cash or Check",
     type: "number",
-    width: 200,
+    width: 240,
   },
   {
     field: "buyingBanking",
     headerName: "Buying by bank's transfer",
     type: "number",
-    width: 200,
+    width: 240,
     // valueGetter: (params: GridValueGetterParams) =>
     //   `${params.row.firstName || ""} ${params.row.lastName || ""}`,
   },
@@ -29,7 +29,7 @@ export const columns: GridColDef[] = [
     field: "selling",
     headerName: "Selling",
     type: "number",
-    width: 200,
+    width: 240,
   },
 ];
 
