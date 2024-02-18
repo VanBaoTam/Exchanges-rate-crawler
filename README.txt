@@ -16,11 +16,6 @@ Yarn (cached value)
 
 Repo's structure: monorepo -> turbo
 
-API:
--https://exchangeratesapi.io
-- Key's: private 
-
-
 NOTES:
  + Design tự do 
  + Stable, optimized, clean (at least follows principles)
